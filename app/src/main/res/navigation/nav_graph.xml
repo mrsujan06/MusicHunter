@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/classicFragment">
+
+    <fragment
+        android:id="@+id/classicFragment"
+        android:name="com.zero.musichunter.ui.fragment.classic.ClassicFragment"
+        android:label="classic_fragment"
+        tools:layout="@layout/classic_fragment" />
+    <fragment
+        android:id="@+id/popFragment"
+        android:name="com.zero.musichunter.ui.fragment.pop.PopFragment"
+        android:label="pop_fragment"
+        tools:layout="@layout/pop_fragment" />
+    <fragment
+        android:id="@+id/rockFragment"
+        android:name="com.zero.musichunter.ui.fragment.rock.RockFragment"
+        android:label="rock_fragment"
+        tools:layout="@layout/rock_fragment" />
+
+</navigation>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Music Hunter</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Main Activity bottom navigation text-->
+    <string name="classic">Classic</string>
+    <string name="pop">Pop</string>
+    <string name="rock">Rock</string>
+
+</resources>

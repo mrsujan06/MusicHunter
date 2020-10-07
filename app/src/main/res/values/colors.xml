@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#212121</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name = "black">#000000</color>
+    <color name="darkGrey">#121212</color>
+    <color name = "white">#fdfafa</color>
+    <color name = "almostWhite">#7b7979</color>
+    <color name = "red">#9c0404</color>
+    <color name="lightBlack">#191919</color>
+    <color name="backgroundFragment">#121212</color>
+    <color name="textColor">#ffffff</color>
+    <color name="cardViewBg">#1E1E1E</color>
+
+</resources>
