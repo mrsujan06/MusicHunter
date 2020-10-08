@@ -1,8 +1,6 @@
 package com.zero.musichunter.viewModelTest
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.zero.musichunter.data.model.MusicResponse
-import com.zero.musichunter.data.model.Result
 import com.zero.musichunter.data.repository.MusicRepo
 import com.zero.musichunter.testDagger.DaggerTestAppComponent
 import com.zero.musichunter.testDagger.TestAppModule

@@ -1,10 +1,10 @@
 package com.zero.musichunter.data.repository
 
-import com.zero.musichunter.data.model.MusicResponse
+import com.zero.musichunter.data.remote.NetworkMusicContainer
 import io.reactivex.Observable
 
 interface MusicRepo {
-    fun getClassicMusic(): Observable<MusicResponse>
-    fun getPopMusic(): Observable<MusicResponse>
-    fun getRockMusic(): Observable<MusicResponse>
+    fun getClassicMusic(): Observable<NetworkMusicContainer>
+    fun getPopMusic(): Observable<NetworkMusicContainer>
+    fun getRockMusic(): Observable<NetworkMusicContainer>
 }

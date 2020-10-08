@@ -3,7 +3,7 @@ package com.zero.musichunter.ui.fragment.classic
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.zero.musichunter.data.model.MusicResponse
+import com.zero.musichunter.data.remote.NetworkMusicContainer
 import com.zero.musichunter.data.repository.MusicRepo
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
@@ -13,8 +13,8 @@ class ClassicViewModel @Inject constructor(var repository: MusicRepo) : ViewMode
 
     private val disposable = CompositeDisposable()
 
-    private val _classicMusicObservable = MutableLiveData<MusicResponse>()
-    val classicMusicObservable: LiveData<MusicResponse>
+    private val _classicMusicObservable = MutableLiveData<NetworkMusicContainer>()
+    val classicMusicObservable: LiveData<NetworkMusicContainer>
         get() = _classicMusicObservable
 
     fun fetchClassicMusic() {
