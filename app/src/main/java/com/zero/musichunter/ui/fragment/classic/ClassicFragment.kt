@@ -12,7 +12,6 @@ import com.xwray.groupie.GroupieViewHolder
 import com.zero.musichunter.App
 import com.zero.musichunter.R
 import com.zero.musichunter.data.domain.MusicResults
-import com.zero.musichunter.data.remote.asDomainModel
 import com.zero.musichunter.data.repository.MusicRepo
 import com.zero.musichunter.ui.recyclerviewitem.MusicRvItem
 import kotlinx.android.synthetic.main.classic_fragment.*
@@ -43,11 +42,14 @@ class ClassicFragment : Fragment() {
             this,
             ClassicViewModelFactory(repository)
         ).get(ClassicViewModel::class.java)
-        viewModel.fetchClassicMusic()
 
-        viewModel.classicMusicObservable.observe(viewLifecycleOwner, Observer {
-            initRecyclerview(it.asDomainModel().toRecyclerviewListItem())
-        })
+        viewModel.getClassicMusicData()
+        viewModel.playlists.observe(viewLifecycleOwner, Observer {
+            initRecyclerview(it.toRecyclerviewListItem())
+        }
+
+        )
+
 
     }
 

@@ -38,7 +38,7 @@ class PopFragment : Fragment() {
         (activity?.applicationContext as App).appComponent.inject(this)
 
         viewModel = ViewModelProvider(this, PopViewModelFactory(repository)).get(PopViewModel::class.java)
-        viewModel.popMusic()
+       // viewModel.popMusic()
         viewModel.popMusicObservable.observe(viewLifecycleOwner, Observer {
             initRecyclerview(it.asDomainModel().toRecyclerviewListItem())
         })

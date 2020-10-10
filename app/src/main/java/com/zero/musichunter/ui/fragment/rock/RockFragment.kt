@@ -38,7 +38,7 @@ class RockFragment : Fragment() {
 
         viewModel =
             ViewModelProvider(this, RockViewModelFactory(repository)).get(RockViewModel::class.java)
-        viewModel.getRockMusic()
+        //viewModel.getRockMusic()
         viewModel.rockMusicObservable.observe(viewLifecycleOwner, Observer {
             initRecyclerview(it.asDomainModel().toRecyclerviewListItem())
         })

@@ -1,36 +1,32 @@
 package com.zero.musichunter.ui.fragment.classic
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.zero.musichunter.data.remote.NetworkMusicContainer
 import com.zero.musichunter.data.repository.MusicRepo
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
+import java.io.IOException
 import javax.inject.Inject
 
 class ClassicViewModel @Inject constructor(var repository: MusicRepo) : ViewModel() {
 
     private val disposable = CompositeDisposable()
 
-    private val _classicMusicObservable = MutableLiveData<NetworkMusicContainer>()
-    val classicMusicObservable: LiveData<NetworkMusicContainer>
-        get() = _classicMusicObservable
+    val playlists = repository.classicMusicObserver()
 
-    fun fetchClassicMusic() {
-        disposable.addAll(
-            repository.getClassicMusic().subscribe({
-                _classicMusicObservable.value = it
-            }, {
-                Timber.e("ClassicViewModel error : $it")
-            }
-            )
-        )
-
-    }
+    fun getClassicMusicData() =
+        try {
+            disposable.add(repository.fetchClassicMusic())
+        } catch (networkError: IOException) {
+            Timber.e("ClassicViewModel error :$networkError")
+        }
 
     override fun onCleared() {
         super.onCleared()
         disposable.clear()
     }
+
 }
+
+
+
+

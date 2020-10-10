@@ -1,6 +1,7 @@
 package com.zero.musichunter.data.remote
 
 import com.squareup.moshi.Json
+import com.zero.musichunter.data.database.DatabaseMusic
 import com.zero.musichunter.data.domain.MusicResults
 
 //result
@@ -38,6 +39,20 @@ fun NetworkMusicContainer.asDomainModel(): List<MusicResults> {
             trackName = it.trackName
         )
     }
+
+}
+
+fun NetworkMusicContainer.asDatabaseModel(): List<DatabaseMusic> {
+    return results.map {
+        DatabaseMusic(
+            previewUrl = it.previewUrl,
+            artistName = it.artistName,
+            artworkUrl100 = it.artworkUrl100,
+            collectionName = it.collectionName,
+            trackName = it.trackName
+        )
+    }
+
 }
 
 

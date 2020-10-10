@@ -18,16 +18,16 @@ class PopViewModel @Inject constructor(val repository: MusicRepo) : ViewModel() 
 
 
     // Fetch pop music data from repository
-    fun popMusic() {
-        disposable.addAll(
-            repository.getPopMusic().subscribe({
-                _popMusicObservable.value = it
-            }, {
-                Timber.e("PopViewModel error : $it")
-            }
-            )
-        )
-    }
+//    fun popMusic() {
+//        disposable.addAll(
+//            repository.getPopMusic().subscribe({
+//                _popMusicObservable.value = it
+//            }, {
+//                Timber.e("PopViewModel error : $it")
+//            }
+//            )
+//        )
+//    }
 
     override fun onCleared() {
         super.onCleared()

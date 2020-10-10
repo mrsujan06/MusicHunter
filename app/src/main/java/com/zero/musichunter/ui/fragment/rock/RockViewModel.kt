@@ -16,15 +16,15 @@ class RockViewModel(val repository: MusicRepo) : ViewModel() {
     val rockMusicObservable: LiveData<NetworkMusicContainer>
         get() = _rockMusicObservable
 
-    fun getRockMusic() {
-        disposable.addAll(
-            repository.getRockMusic().subscribe({
-                _rockMusicObservable.value = it
-            }, {
-                Timber.e("RockViewModel error: $it")
-            })
-        )
-    }
+//    fun getRockMusic() {
+//        disposable.addAll(
+//            repository.getRockMusic().subscribe({
+//                _rockMusicObservable.value = it
+//            }, {
+//                Timber.e("RockViewModel error: $it")
+//            })
+//        )
+//    }
 
     override fun onCleared() {
         super.onCleared()
