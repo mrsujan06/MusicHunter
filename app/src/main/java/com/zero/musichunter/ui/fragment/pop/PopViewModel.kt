@@ -1,37 +1,34 @@
 package com.zero.musichunter.ui.fragment.pop
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.zero.musichunter.data.model.MusicResponse
 import com.zero.musichunter.data.repository.MusicRepo
-import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.io.IOException
 import javax.inject.Inject
 
 class PopViewModel @Inject constructor(val repository: MusicRepo) : ViewModel() {
 
-    private val disposable = CompositeDisposable()
-    private val _popMusicObservable = MutableLiveData<MusicResponse>()
-    val popMusicObservable: LiveData<MusicResponse>
-        get() = _popMusicObservable
+    private val viewModelJob = Job()
+    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
+    val playlist = repository.popMusicObservable()
 
     // Fetch pop music data from repository
-    fun popMusic() {
-        disposable.addAll(
-            repository.getPopMusic().subscribe({
-                _popMusicObservable.value = it
-            }, {
-                Timber.e("PopViewModel error : $it")
-            }
-            )
-        )
+    fun popMusic() = coroutineScope.launch {
+        try {
+            repository.getPopMusic()
+        } catch (networkError: IOException) {
+            Timber.e("network error : $networkError")
+        }
     }
 
     override fun onCleared() {
         super.onCleared()
-        disposable.clear()
+        viewModelJob.cancel()
     }
 
 }

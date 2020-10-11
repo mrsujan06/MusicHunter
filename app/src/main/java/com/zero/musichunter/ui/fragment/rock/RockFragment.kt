@@ -11,7 +11,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.zero.musichunter.App
 import com.zero.musichunter.R
-import com.zero.musichunter.data.model.Result
+import com.zero.musichunter.data.domain.MusicResults
 import com.zero.musichunter.data.repository.MusicRepo
 import com.zero.musichunter.ui.recyclerviewitem.MusicRvItem
 import kotlinx.android.synthetic.main.rock_fragment.*
@@ -37,9 +37,9 @@ class RockFragment : Fragment() {
 
         viewModel =
             ViewModelProvider(this, RockViewModelFactory(repository)).get(RockViewModel::class.java)
-        viewModel.getRockMusic()
-        viewModel.rockMusicObservable.observe(viewLifecycleOwner, Observer {
-            initRecyclerview(it.results.toRecyclerviewListItem())
+        viewModel.rockMusic()
+        viewModel.playlist.observe(viewLifecycleOwner, Observer {
+            initRecyclerview(it.toRecyclerviewListItem())
         })
     }
 
@@ -54,7 +54,7 @@ class RockFragment : Fragment() {
 
     }
 
-    private fun List<Result>.toRecyclerviewListItem(): List<MusicRvItem> {
+    private fun List<MusicResults>.toRecyclerviewListItem(): List<MusicRvItem> {
         return this.map {
             MusicRvItem(it)
         }
