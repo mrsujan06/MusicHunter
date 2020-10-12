@@ -31,7 +31,6 @@ open class AppModule(var app: App) {
             .baseUrl(Constant.BASE_URL)
             .client(okHttpClient)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
 
@@ -70,7 +69,6 @@ open class AppModule(var app: App) {
     open fun provideNetworkService(retrofit: Retrofit): MusicApiService =
         retrofit.create(MusicApiService::class.java)
 
-
     @Provides
     @Singleton
     open fun provideRoomDatabase(context: Context): MusicDatabase =
@@ -78,7 +76,7 @@ open class AppModule(var app: App) {
             context.applicationContext,
             MusicDatabase::class.java,
             "Musics"
-        ).allowMainThreadQueries().build()
+        ).fallbackToDestructiveMigration().build()
 
     @Provides
     @Singleton

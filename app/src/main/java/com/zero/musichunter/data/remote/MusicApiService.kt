@@ -11,7 +11,7 @@ interface MusicApiService {
     fun getClassicMusic(): Flowable<NetworkMusicContainer>
 
     @GET(Constant.POP_MUSIC)
-    fun getPopMusic(): Observable<NetworkMusicContainer>
+    fun getPopMusic(): Flowable<NetworkMusicContainer>
 
     @GET(Constant.ROCK_MUSIC)
     fun getRockMusic(): Observable<NetworkMusicContainer>

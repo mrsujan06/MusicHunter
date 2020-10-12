@@ -1,7 +1,9 @@
 package com.zero.musichunter.data.remote
 
 import com.squareup.moshi.Json
-import com.zero.musichunter.data.database.DatabaseMusic
+import com.zero.musichunter.data.database.DatabaseClassicMusic
+import com.zero.musichunter.data.database.DatabasePopMusic
+import com.zero.musichunter.data.database.DatabaseRockMusic
 import com.zero.musichunter.data.domain.MusicResults
 
 //result
@@ -42,9 +44,35 @@ fun NetworkMusicContainer.asDomainModel(): List<MusicResults> {
 
 }
 
-fun NetworkMusicContainer.asDatabaseModel(): List<DatabaseMusic> {
+fun NetworkMusicContainer.asDatabaseClassicModel(): List<DatabaseClassicMusic> {
     return results.map {
-        DatabaseMusic(
+        DatabaseClassicMusic(
+            previewUrl = it.previewUrl,
+            artistName = it.artistName,
+            artworkUrl100 = it.artworkUrl100,
+            collectionName = it.collectionName,
+            trackName = it.trackName
+        )
+    }
+
+}
+
+fun NetworkMusicContainer.asDatabasePopModel(): List<DatabasePopMusic> {
+    return results.map {
+        DatabasePopMusic(
+            previewUrl = it.previewUrl,
+            artistName = it.artistName,
+            artworkUrl100 = it.artworkUrl100,
+            collectionName = it.collectionName,
+            trackName = it.trackName
+        )
+    }
+
+}
+
+fun NetworkMusicContainer.asDatabaseRockModel(): List<DatabaseRockMusic> {
+    return results.map {
+        DatabaseRockMusic(
             previewUrl = it.previewUrl,
             artistName = it.artistName,
             artworkUrl100 = it.artworkUrl100,

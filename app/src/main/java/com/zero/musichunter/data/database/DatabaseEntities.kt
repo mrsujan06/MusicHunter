@@ -9,7 +9,7 @@ import com.zero.musichunter.data.domain.MusicResults
  * DatabaseMusic represents a music entity in the database.
  */
 @Entity
-data class DatabaseMusic constructor(
+data class DatabaseClassicMusic constructor(
     @PrimaryKey
     val previewUrl: String,
     val artistName: String,
@@ -21,7 +21,63 @@ data class DatabaseMusic constructor(
 /**
  * Map DatabaseMusic to domain entities
  */
-fun List<DatabaseMusic>.asDomainModel(): List<MusicResults> {
+fun List<DatabaseClassicMusic>.asDomainClassicModel(): List<MusicResults> {
+    return map {
+        MusicResults(
+            previewUrl = it.previewUrl,
+            artistName = it.artistName,
+            artworkUrl100 = it.artworkUrl100,
+            collectionName = it.collectionName,
+            trackName = it.trackName
+        )
+    }
+}
+
+/**
+ * DatabasePopMusic represents a music entity in the database.
+ */
+@Entity
+data class DatabasePopMusic constructor(
+    @PrimaryKey
+    val previewUrl: String,
+    val artistName: String,
+    val artworkUrl100: String,
+    val collectionName: String?,
+    val trackName: String?,
+)
+
+/**
+ * Map DatabasePopMusic to domain entities
+ */
+fun List<DatabasePopMusic>.asDomainPopModel(): List<MusicResults> {
+    return map {
+        MusicResults(
+            previewUrl = it.previewUrl,
+            artistName = it.artistName,
+            artworkUrl100 = it.artworkUrl100,
+            collectionName = it.collectionName,
+            trackName = it.trackName
+        )
+    }
+}
+
+/**
+ * DatabaseRockMusic represents a music entity in the database.
+ */
+@Entity
+data class DatabaseRockMusic constructor(
+    @PrimaryKey
+    val previewUrl: String,
+    val artistName: String,
+    val artworkUrl100: String,
+    val collectionName: String?,
+    val trackName: String?,
+)
+
+/**
+ * Map DatabaseRockMusic to domain entities
+ */
+fun List<DatabaseRockMusic>.asDomainRockModel(): List<MusicResults> {
     return map {
         MusicResults(
             previewUrl = it.previewUrl,

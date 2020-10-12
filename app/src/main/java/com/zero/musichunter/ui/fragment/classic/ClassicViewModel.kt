@@ -15,7 +15,7 @@ class ClassicViewModel @Inject constructor(var repository: MusicRepo) : ViewMode
 
     fun getClassicMusicData() =
         try {
-            disposable.add(repository.fetchClassicMusic())
+            disposable.addAll(repository.fetchClassicMusic())
         } catch (networkError: IOException) {
             Timber.e("ClassicViewModel error :$networkError")
         }
