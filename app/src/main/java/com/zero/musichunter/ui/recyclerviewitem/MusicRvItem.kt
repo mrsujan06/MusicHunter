@@ -7,11 +7,11 @@ import com.squareup.picasso.Picasso
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.zero.musichunter.R
-import com.zero.musichunter.data.model.Result
+import com.zero.musichunter.data.domain.MusicResults
 import kotlinx.android.synthetic.main.item_music.view.*
 
 
-class MusicRvItem(private val result: Result) : Item() {
+class MusicRvItem(private val result: MusicResults) : Item() {
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.apply {

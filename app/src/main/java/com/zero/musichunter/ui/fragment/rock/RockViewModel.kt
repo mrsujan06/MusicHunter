@@ -1,33 +1,32 @@
 package com.zero.musichunter.ui.fragment.rock
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.zero.musichunter.data.model.MusicResponse
 import com.zero.musichunter.data.repository.MusicRepo
-import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.io.IOException
 
 class RockViewModel(val repository: MusicRepo) : ViewModel() {
 
-    private val disposable = CompositeDisposable()
-    private val _rockMusicObservable = MutableLiveData<MusicResponse>()
+    private val viewModelJob = Job()
+    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    val rockMusicObservable: LiveData<MusicResponse>
-        get() = _rockMusicObservable
+    val playlist = repository.rockMusicObservable()
 
-    fun getRockMusic() {
-        disposable.addAll(
-            repository.getRockMusic().subscribe({
-                _rockMusicObservable.value = it
-            }, {
-                Timber.e("RockViewModel error: $it")
-            })
-        )
+    // Fetch pop music data from repository
+    fun rockMusic() = coroutineScope.launch {
+        try {
+            repository.getRockMusic()
+        } catch (networkError: IOException) {
+            Timber.e("network error : $networkError")
+        }
     }
 
     override fun onCleared() {
         super.onCleared()
-        disposable.clear()
+        viewModelJob.cancel()
     }
 }

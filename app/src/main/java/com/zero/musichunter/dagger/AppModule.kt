@@ -1,7 +1,11 @@
 package com.zero.musichunter.dagger
 
+import android.content.Context
+import androidx.room.Room
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.zero.musichunter.App
+import com.zero.musichunter.data.database.MusicDatabase
 import com.zero.musichunter.data.remote.MusicApiService
 import com.zero.musichunter.data.repository.MusicRepo
 import com.zero.musichunter.data.repository.MusicRepoImp
@@ -17,7 +21,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-open class AppModule {
+open class AppModule(var app: App) {
 
     @Singleton
     @Provides
@@ -54,11 +58,31 @@ open class AppModule {
 
     @Provides
     @Singleton
-    open fun provideMusicRepository(musicApiService: MusicApiService): MusicRepo = MusicRepoImp(musicApiService)
+    open fun provideMusicRepository(
+        musicApiService: MusicApiService,
+        database: MusicDatabase
+    ): MusicRepo = MusicRepoImp(musicApiService, database)
 
     @Provides
     @Singleton
     open fun provideNetworkService(retrofit: Retrofit): MusicApiService =
         retrofit.create(MusicApiService::class.java)
 
+
+    @Provides
+    @Singleton
+    open fun provideRoomDatabase(context: Context): MusicDatabase =
+        Room.databaseBuilder(
+            context.applicationContext,
+            MusicDatabase::class.java,
+            "Musics"
+        ).fallbackToDestructiveMigration().build()
+
+    @Provides
+    @Singleton
+    fun provideApp(): App = app
+
+    @Provides
+    @Singleton
+    fun provideContext(): Context = app.applicationContext
 }
