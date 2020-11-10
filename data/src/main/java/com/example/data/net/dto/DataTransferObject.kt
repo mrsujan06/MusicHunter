@@ -1,4 +1,4 @@
-package com.example.data.net
+package com.example.data.net.dto
 
 import com.example.data.persistence.entities.RepoClassicEntity
 import com.example.data.persistence.entities.RepoPopEntity

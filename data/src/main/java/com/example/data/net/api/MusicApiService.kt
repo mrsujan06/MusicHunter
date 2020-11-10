@@ -1,5 +1,6 @@
-package com.example.data.net
+package com.example.data.net.api
 
+import com.example.data.net.dto.NetworkMusicContainer
 import com.example.data.utils.Constant
 import io.reactivex.Single
 import retrofit2.http.GET

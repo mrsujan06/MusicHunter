@@ -1,19 +1,17 @@
 package com.zero.musichunter.viewModelTest
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.data.net.NetworkMusicContainer
-import com.example.data.net.RepoDTO
+import com.example.data.net.dto.NetworkMusicContainer
+import com.example.data.net.dto.RepoDTO
 import com.zero.musichunter.data.model.MusicResponse
 import com.zero.musichunter.data.model.Result
 import com.zero.musichunter.domain.model.Repo
 import com.zero.musichunter.domain.repository.RepoRepository
 import com.zero.musichunter.testDagger.DaggerTestAppComponent
-import com.zero.musichunter.testDagger.TestAppModule
 import com.zero.musichunter.ui.fragment.classic.ClassicViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.reactivex.Observable
 import io.reactivex.Single
 import org.junit.Assert
 import org.junit.Before
@@ -68,10 +66,10 @@ class ClassicViewModelTest {
         every { repository.getClassicListRepo() } returns (Single.just(classicMusicz))
 
         //when
-        classicViewModel.fetchClassicMusic()
+        classicViewModel.fetchClassicFromNet()
 
         //then
-        Assert.assertEquals(classicViewModel.classicRepo.value, musicResponse)
+        Assert.assertEquals(classicViewModel.classicRepoNet.value, musicResponse)
 
     }
 

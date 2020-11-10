@@ -1,6 +1,8 @@
 package com.example.data.di.modules
 
-import com.example.data.net.MusicApiService
+import android.content.Context
+import com.example.data.di.providers.NetworkChecker
+import com.example.data.net.api.MusicApiService
 import com.example.data.utils.Constant
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -56,4 +58,7 @@ open class NetModule {
         retrofit.create(MusicApiService::class.java)
 
 
+    @Provides
+    @Singleton
+    open fun provideNetworkChecker(context: Context): NetworkChecker = NetworkChecker(context)
 }

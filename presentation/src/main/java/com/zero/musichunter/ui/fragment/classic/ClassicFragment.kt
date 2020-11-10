@@ -1,10 +1,12 @@
 package com.zero.musichunter.ui.fragment.classic
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +17,7 @@ import com.zero.musichunter.R
 import com.zero.musichunter.domain.model.Repo
 import com.zero.musichunter.domain.repository.RepoRepository
 import com.zero.musichunter.ui.recyclerviewitem.MusicRvItem
+import com.zero.musichunter.utils.CheckConnection.isOnline
 import kotlinx.android.synthetic.main.classic_fragment.*
 import javax.inject.Inject
 
@@ -33,6 +36,7 @@ class ClassicFragment : Fragment() {
         return inflater.inflate(R.layout.classic_fragment, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -44,15 +48,23 @@ class ClassicFragment : Fragment() {
             ClassicViewModelFactory(repository)
         ).get(ClassicViewModel::class.java)
 
-        viewModel.fetchClassicMusic()
+        if (isOnline(context)) {
+            viewModel.fetchClassicFromNet()
+        } else {
+            viewModel.fetchClassicFromCache()
+        }
 
-        viewModel.classicRepo.observe(viewLifecycleOwner, Observer {
-            if (it.isNotEmpty()) {
+        if (isOnline(context)) {
+            Toast.makeText(context, "Connected", Toast.LENGTH_LONG).show()
+            viewModel.classicRepoNet.observe(viewLifecycleOwner, Observer {
                 initRecyclerview(it.toRecyclerviewListItem())
-            } else {
-                Toast.makeText(activity, "List size 0", Toast.LENGTH_LONG).show()
+            })
+        } else {
+            Toast.makeText(context, "No connection", Toast.LENGTH_LONG).show()
+            viewModel.classicRepoCache.observe(viewLifecycleOwner) {
+                initRecyclerview(it.toRecyclerviewListItem())
             }
-        })
+        }
 
     }
 
@@ -72,5 +84,7 @@ class ClassicFragment : Fragment() {
             MusicRvItem(it)
         }
     }
+
+
 
 }

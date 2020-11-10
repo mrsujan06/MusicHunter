@@ -7,6 +7,7 @@ import com.example.data.di.components.DataComponent
 import com.zero.musichunter.di.components.ApplicationComponent
 import com.zero.musichunter.di.components.DaggerApplicationComponent
 import timber.log.Timber
+import timber.log.Timber.DebugTree
 
 class App : Application() {
 
@@ -19,7 +20,9 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         appComponent = initDagger()
-        Timber.plant(Timber.DebugTree())
+        if (BuildConfig.DEBUG) {
+            Timber.plant(DebugTree())
+        }
     }
 
     private fun initDagger(): ApplicationComponent =

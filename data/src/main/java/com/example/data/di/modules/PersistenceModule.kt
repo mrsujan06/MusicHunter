@@ -8,7 +8,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-open class PersistenceModule {
+ open class PersistenceModule {
 
     @Provides
     @Singleton

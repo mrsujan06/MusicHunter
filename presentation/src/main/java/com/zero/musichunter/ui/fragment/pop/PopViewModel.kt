@@ -6,37 +6,41 @@ import androidx.lifecycle.ViewModel
 import com.example.data.utils.TimberWrapper
 import com.zero.musichunter.domain.model.Repo
 import com.zero.musichunter.domain.repository.RepoRepository
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
-import java.io.IOException
 import javax.inject.Inject
 
 class PopViewModel @Inject constructor(val repository: RepoRepository) : ViewModel() {
 
-    private val _popMusicList = MutableLiveData<List<Repo>>()
-    val popMusicList: LiveData<List<Repo>>
-        get() = _popMusicList
-    val bag = CompositeDisposable()
+    private val _popRepo = MutableLiveData<List<Repo>>()
+    val popRepo: LiveData<List<Repo>>
+        get() = _popRepo
+    private val bag = CompositeDisposable()
+
+    private val _popRepoCache = MutableLiveData<List<Repo>>()
+    val popRepoCache: LiveData<List<Repo>>
+        get() = _popRepoCache
 
     // Fetch pop music data from repository
-    fun popMusic() {
-        try {
-            bag.addAll(
-                repository.getPopListRepo()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        TimberWrapper.d { "PopMusic fetched" }
-                        _popMusicList.value = it
-                    }, {
-                        TimberWrapper.e { it }
-                    })
-            )
-        } catch (networkError: IOException) {
-            Timber.e("network error : $networkError")
-        }
+    fun fetchPopFromNet() {
+        bag.addAll(
+            repository.getPopListFromNet()
+                .subscribe({
+                    _popRepo.value = it
+                }, {
+                    TimberWrapper.e { it }
+                })
+        )
+    }
+
+    fun fetchPopFromCache() {
+        bag.addAll(
+            repository
+                .getCachePopListRepo()
+                .subscribe({
+                    _popRepoCache.value = it
+                }, {
+                })
+        )
     }
 
     override fun onCleared() {

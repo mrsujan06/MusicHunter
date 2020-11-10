@@ -6,37 +6,45 @@ import androidx.lifecycle.ViewModel
 import com.example.data.utils.TimberWrapper
 import com.zero.musichunter.domain.model.Repo
 import com.zero.musichunter.domain.repository.RepoRepository
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
-import java.io.IOException
 
 class RockViewModel(val repository: RepoRepository) : ViewModel() {
 
-    private val _rockMusicList = MutableLiveData<List<Repo>>()
-    val rockMusicList: LiveData<List<Repo>>
-        get() = _rockMusicList
-    val bag = CompositeDisposable()
+    private val _rockRepo = MutableLiveData<List<Repo>>()
+    val rockRepo: LiveData<List<Repo>>
+        get() = _rockRepo
+
+    private val _rockRepoCache = MutableLiveData<List<Repo>>()
+    val rockRepoCache: LiveData<List<Repo>>
+        get() = _rockRepoCache
+
+    private val bag = CompositeDisposable()
 
     // Fetch pop music data from repository
-    fun rockMusic() {
-        try {
-            bag.addAll(
-                repository.getRockListRepo()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        _rockMusicList.value = it
-                        TimberWrapper.d { "fetched rock music ---" }
-                    }, {
-                        TimberWrapper.e { it }
-                    })
-            )
-        } catch (networkError: IOException) {
-            Timber.e("network error : $networkError")
-        }
+    fun fetchRockFromNet() {
+        bag.addAll(
+            repository.getRockListFromNet()
+                .subscribe({
+                    _rockRepo.value = it
+                    TimberWrapper.d { "fetched rock music ---" }
+                }, {
+                    TimberWrapper.e { it }
+                })
+        )
     }
+
+    fun fetchRockFromCache() {
+        bag.addAll(
+            repository
+                .getCacheRockListRepo()
+                .subscribe({
+                    _rockRepoCache.value = it
+                }, {
+                    TimberWrapper.e { it }
+                })
+        )
+    }
+
 
     override fun onCleared() {
         super.onCleared()
