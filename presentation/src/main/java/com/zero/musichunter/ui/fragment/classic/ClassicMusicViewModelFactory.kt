@@ -2,13 +2,12 @@ package com.zero.musichunter.ui.fragment.classic
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.zero.musichunter.domain.repository.RepoRepository
-import javax.inject.Inject
+import com.zero.musichunter.domain.usecases.GetClassicListRepo
 
 @Suppress("UNCHECKED_CAST")
-class ClassicViewModelFactory @Inject constructor(val repository: RepoRepository) :
+class ClassicMusicViewModelFactory (private val getClassicListRepo: GetClassicListRepo) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return ClassicViewModel(repository) as T
+        return ClassicMusicViewModel(getClassicListRepo) as T
     }
 }

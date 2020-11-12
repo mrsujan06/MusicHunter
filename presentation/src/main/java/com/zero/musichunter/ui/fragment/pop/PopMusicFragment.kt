@@ -7,25 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.zero.musichunter.App
-import com.zero.musichunter.utils.CheckConnection.isOnline
 import com.zero.musichunter.R
-import com.zero.musichunter.domain.model.Repo
-import com.zero.musichunter.domain.repository.RepoRepository
 import com.zero.musichunter.ui.recyclerviewitem.MusicRvItem
+import com.zero.musichunter.utils.Extensions.toRecyclerviewListItem
 import kotlinx.android.synthetic.main.pop_fragment.*
 import javax.inject.Inject
 
-class PopFragment : Fragment() {
+class PopMusicFragment : Fragment() {
+
 
     @Inject
-    lateinit var repository: RepoRepository
+    lateinit var popMusicViewModelFactory: PopMusicViewModelFactory
 
-    private lateinit var viewModel: PopViewModel
+    private lateinit var musicViewModel: PopMusicViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,28 +36,26 @@ class PopFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        initDagger()
+
+        initViewModel()
+
+    }
+
+    private fun initDagger() {
         (activity?.applicationContext as App).appComponent.activityComponent()
             .create(this.requireActivity()).inject(this)
+    }
 
-        viewModel =
-            ViewModelProvider(this, PopViewModelFactory(repository)).get(PopViewModel::class.java)
+    private fun initViewModel() {
+        musicViewModel =
+            ViewModelProvider(this, popMusicViewModelFactory).get(PopMusicViewModel::class.java)
 
-        if (isOnline(context)) {
-            viewModel.fetchPopFromNet()
-        } else{
-            viewModel.fetchPopFromCache()
+        musicViewModel.loadPopRepo()
+
+        musicViewModel.popRepo.observe(viewLifecycleOwner) {
+            initRecyclerview(it.toRecyclerviewListItem())
         }
-
-        if (isOnline(context)){
-            viewModel.popRepo.observe(viewLifecycleOwner, Observer {
-                initRecyclerview(it.toRecyclerviewListItem())
-            })
-        } else {
-            viewModel.popRepoCache.observe(viewLifecycleOwner, Observer {
-                initRecyclerview(it.toRecyclerviewListItem())
-            })
-        }
-
     }
 
     private fun initRecyclerview(items: List<MusicRvItem>) {
@@ -73,10 +69,5 @@ class PopFragment : Fragment() {
 
     }
 
-    private fun List<Repo>.toRecyclerviewListItem(): List<MusicRvItem> {
-        return this.map {
-            MusicRvItem(it)
-        }
-    }
 
 }

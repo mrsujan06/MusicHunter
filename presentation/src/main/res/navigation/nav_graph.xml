@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/classicFragment"
-        android:name="com.zero.musichunter.ui.fragment.classic.ClassicFragment"
+        android:name="com.zero.musichunter.ui.fragment.classic.ClassicMusicFragment"
         android:label="classic_fragment"
         tools:layout="@layout/classic_fragment" />
     <fragment
         android:id="@+id/popFragment"
-        android:name="com.zero.musichunter.ui.fragment.pop.PopFragment"
+        android:name="com.zero.musichunter.ui.fragment.pop.PopMusicFragment"
         android:label="pop_fragment"
         tools:layout="@layout/pop_fragment" />
     <fragment
         android:id="@+id/rockFragment"
-        android:name="com.zero.musichunter.ui.fragment.rock.RockFragment"
+        android:name="com.zero.musichunter.ui.fragment.rock.RockMusicFragment"
         android:label="rock_fragment"
         tools:layout="@layout/rock_fragment" />
 

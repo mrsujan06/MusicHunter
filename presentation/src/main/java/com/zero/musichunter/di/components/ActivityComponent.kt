@@ -3,9 +3,9 @@ package com.zero.musichunter.di.components
 import android.app.Activity
 import com.zero.musichunter.di.PerActivity
 import com.zero.musichunter.di.modules.ActivityModule
-import com.zero.musichunter.ui.fragment.classic.ClassicFragment
-import com.zero.musichunter.ui.fragment.pop.PopFragment
-import com.zero.musichunter.ui.fragment.rock.RockFragment
+import com.zero.musichunter.ui.fragment.classic.ClassicMusicFragment
+import com.zero.musichunter.ui.fragment.pop.PopMusicFragment
+import com.zero.musichunter.ui.fragment.rock.RockMusicFragment
 import dagger.BindsInstance
 import dagger.Subcomponent
 
@@ -19,11 +19,11 @@ interface ActivityComponent {
     }
 
     //region Inject
-    fun inject(fragment: ClassicFragment)
+    fun inject(musicFragment: ClassicMusicFragment)
 
-    fun inject(fragment: PopFragment)
+    fun inject(musicFragment: PopMusicFragment)
 
-    fun inject(fragment: RockFragment)
+    fun inject(musicFragment: RockMusicFragment)
     //endregion
 
 }

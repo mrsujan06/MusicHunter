@@ -11,6 +11,7 @@ import com.zero.musichunter.domain.model.Repo
  */
 @Entity(tableName = REPO_CLASSIC_TABLE)
 data class RepoClassicEntity constructor(
+
     @PrimaryKey
     @ColumnInfo(name = REPO_CLASSIC_ID)
     val previewUrl: String,
