@@ -1,22 +1,22 @@
 package com.example.data.mapper
 
 import com.example.data.net.dto.RepoDTO
-import com.example.data.persistence.entities.RepoClassicEntity
-import com.example.data.persistence.entities.RepoPopEntity
-import com.example.data.persistence.entities.RepoRockEntity
+import com.example.data.persistence.entities.ClassicEntity
+import com.example.data.persistence.entities.PopEntity
+import com.example.data.persistence.entities.RockEntity
 import com.zero.musichunter.domain.model.Repo
 import javax.inject.Inject
 
 /**
  * Mapper class used to transform [RepoDTO] or
- * RepoEntities such as [RepoClassicEntity] , [RepoPopEntity],
- * [RepoRockEntity] to [Repo] in the domain layer and vice versa
+ * RepoEntities such as [ClassicEntity] , [PopEntity],
+ * [RockEntity] to [Repo] in the domain layer and vice versa
  * */
 
 class RepoMapper
 @Inject constructor() {
 
-    //region DTO to MODEL
+    //region Net DTO to domain MODEL
     /**
      *Transform a [RepoDTO] into [Repo].
      * @param dto Object to be transformed.
@@ -29,7 +29,7 @@ class RepoMapper
         )
 
     /**
-     * Transform [RepoClassicEntity],[RepoPopEntity],[RepoRockEntity]
+     * Transform [ClassicEntity],[PopEntity],[RockEntity]
      * into an [Repo].
      * @param dtoCollection Object Collection to be transformed.
      * @return list of [Repo]
@@ -40,13 +40,13 @@ class RepoMapper
         }
     //end region
 
-    //region classic ENTITY to MODEL
+    //region classic database ENTITY to domain MODEL
     /**
-     * Transform a [RepoClassicEntity] into a [Repo].
+     * Transform a [ClassicEntity] into a [Repo].
      * @param entity Object to be transformed.
-     * @return [Repo] if valid [RepoClassicEntity] otherwise null.
+     * @return [Repo] if valid [ClassicEntity] otherwise null.
      */
-    private fun transformClassicToRepo(entity: RepoClassicEntity): Repo =
+    private fun transformClassicToRepo(entity: ClassicEntity): Repo =
         Repo(
             entity.artistName,
             entity.artworkUrl100,
@@ -56,23 +56,23 @@ class RepoMapper
         )
 
     /**
-     * Transform a Collection of [RepoClassicEntity] into a List of [Repo].
+     * Transform a Collection of [ClassicEntity] into a List of [Repo].
      * @param entityClassicCollection Object collection to be transformed.
      * @return list of [Repo].
      */
-    fun transformClassicEntityToRepo(entityClassicCollection: Collection<RepoClassicEntity>): List<Repo> =
+    fun transformClassicEntityToRepo(entityClassicCollection: Collection<ClassicEntity>): List<Repo> =
         entityClassicCollection.map {
             transformClassicToRepo(it)
         }
-    //end region
+    //endregion
 
-    //region pop ENTITY to MODEL
+    //region pop database ENTITY to domain MODEL
     /**
-     * Transform a [RepoPopEntity] into a [Repo].
+     * Transform a [PopEntity] into a [Repo].
      * @param entity Object to be transformed.
-     * @return [Repo] if valid [RepoPopEntity] otherwise null.
+     * @return [Repo] if valid [PopEntity] otherwise null.
      */
-    private fun transformPopToRepo(entity: RepoPopEntity): Repo =
+    private fun transformPopToRepo(entity: PopEntity): Repo =
         Repo(
             entity.artistName,
             entity.artworkUrl100,
@@ -82,23 +82,23 @@ class RepoMapper
         )
 
     /**
-     * Transform a Collection of [RepoPopEntity] into a List of [Repo].
+     * Transform a Collection of [PopEntity] into a List of [Repo].
      * @param entityPopCollection Object collection to be transformed.
      * @return list of [Repo].
      */
-    fun transformPopToRepoList(entityPopCollection: Collection<RepoPopEntity>): List<Repo> =
+    fun transformPopToRepoList(entityPopCollection: Collection<PopEntity>): List<Repo> =
         entityPopCollection.map {
             transformPopToRepo(it)
         }
     //end region
 
-    //region rock ENTITY to MODEL
+    //region rock database ENTITY to domain MODEL
     /**
-     * Transform a [RepoRockEntity] into a [Repo].
+     * Transform a [RockEntity] into a [Repo].
      * @param entity Object to be transformed.
-     * @return [Repo] if valid [RepoRockEntity] otherwise null.
+     * @return [Repo] if valid [RockEntity] otherwise null.
      */
-    private fun transformRockToRepo(entity: RepoRockEntity): Repo {
+    private fun transformRockToRepo(entity: RockEntity): Repo {
         return Repo(
             entity.artistName,
             entity.artworkUrl100,
@@ -109,25 +109,25 @@ class RepoMapper
     }
 
     /**
-     * Transform a Collection of [RepoRockEntity] into a List of [Repo].
+     * Transform a Collection of [RockEntity] into a List of [Repo].
      * @param entityRockCollection Object collection to be transformed.
      * @return list of [Repo].
      */
-    fun transformRockToRepoList(entityRockCollection: Collection<RepoRockEntity>): List<Repo> {
+    fun transformRockToRepoList(entityRockCollection: Collection<RockEntity>): List<Repo> {
         return entityRockCollection.map {
             transformRockToRepo(it)
         }
     }
     //end region
 
-    //region MODEL to classic ENTITY
+    //region Domain MODEL to classic database ENTITY
     /**
-     * Transform a [Repo] into an [RepoClassicEntity].
+     * Transform a [Repo] into an [ClassicEntity].
      * @param model Object to be transformed.
-     * @return [Repo] if valid [RepoEntity] otherwise null.
+     * @return [Repo] if valid [ClassicEntity] otherwise null.
      */
-    fun transformToClassicEntity(model: Repo): RepoClassicEntity =
-        RepoClassicEntity(
+    fun transformToClassicEntity(model: Repo): ClassicEntity =
+        ClassicEntity(
             model.previewUrl,
             model.artistName,
             model.artworkUrl100,
@@ -136,24 +136,24 @@ class RepoMapper
         )
 
     /**
-     * Transform a Collection of [Repo] into a List of [RepoClassicEntity].
+     * Transform a Collection of [Repo] into a List of [ClassicEntity].
      * @param modelCollection Object Collection to be transformed.
-     * @return list of [RepoClassicEntity]
+     * @return list of [ClassicEntity]
      */
-    fun transformToClassicEntityList(modelCollection: Collection<Repo>): List<RepoClassicEntity> =
+    fun transformToClassicEntityList(modelCollection: Collection<Repo>): List<ClassicEntity> =
         modelCollection.map {
             transformToClassicEntity(it)
         }
     //end region
 
-    //region MODEL to pop ENTITY
+    //region domain MODEL to pop database ENTITY
     /**
-     * Transform a [Repo] into an [RepoPopEntity].
+     * Transform a [Repo] into an [PopEntity].
      * @param model Object to be transformed.
-     * @return [Repo] if valid [RepoPopEntity] otherwise null.
+     * @return [Repo] if valid [PopEntity] otherwise null.
      */
-    fun transformToPopEntity(model: Repo): RepoPopEntity =
-        RepoPopEntity(
+    fun transformToPopEntity(model: Repo): PopEntity =
+        PopEntity(
             model.previewUrl,
             model.artistName,
             model.artworkUrl100,
@@ -162,24 +162,24 @@ class RepoMapper
         )
 
     /**
-     * Transform a Collection of [Repo] into a List of [RepoPopEntity].
+     * Transform a Collection of [Repo] into a List of [PopEntity].
      * @param modelCollection Object Collection to be transformed.
-     * @return list of [RepoPopEntity]
+     * @return list of [PopEntity]
      */
-    fun transformToPopEntity(modelCollection: Collection<Repo>): List<RepoPopEntity> =
+    fun transformToPopEntity(modelCollection: Collection<Repo>): List<PopEntity> =
         modelCollection.map {
             transformToPopEntity(it)
         }
     //end region
 
-    //region MODEL to rock ENTITY
+    //region domain MODEL to rock database ENTITY
     /**
-     * Transform a [Repo] into an [RepoRockEntity].
+     * Transform a [Repo] into an [RockEntity].
      * @param model Object to be transformed.
-     * @return [Repo] if valid [RepoRockEntity] otherwise null.
+     * @return [Repo] if valid [RockEntity] otherwise null.
      */
-    fun transformToRockEntity(model: Repo): RepoRockEntity {
-        return RepoRockEntity(
+    fun transformToRockEntity(model: Repo): RockEntity {
+        return RockEntity(
             model.previewUrl,
             model.artistName,
             model.artworkUrl100,
@@ -189,11 +189,11 @@ class RepoMapper
     }
 
     /**
-     * Transform a Collection of [Repo] into a List of [RepoRockEntity].
+     * Transform a Collection of [Repo] into a List of [RockEntity].
      * @param modelCollection Object Collection to be transformed.
-     * @return list of [RepoRockEntity]
+     * @return list of [RockEntity]
      */
-    fun transformToRockEntity(modelCollection: Collection<Repo>): List<RepoRockEntity> =
+    fun transformToRockEntity(modelCollection: Collection<Repo>): List<RockEntity> =
         modelCollection.map {
             transformToRockEntity(it)
         }

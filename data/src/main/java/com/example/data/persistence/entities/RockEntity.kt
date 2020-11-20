@@ -3,14 +3,13 @@ package com.example.data.persistence.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.data.persistence.entities.RepoRockEntity.Companion.REPO_ROCK_TABLE
-import com.zero.musichunter.domain.model.Repo
+import com.example.data.persistence.entities.RockEntity.Companion.REPO_ROCK_TABLE
 
 /**
  * RepoRockEntity represents a Rock music entity in the database.
  */
 @Entity(tableName = REPO_ROCK_TABLE)
-data class RepoRockEntity constructor(
+data class RockEntity constructor(
     @PrimaryKey
     @ColumnInfo(name = REPO_ROCK_ID)
     val previewUrl: String,
@@ -36,20 +35,3 @@ data class RepoRockEntity constructor(
     }
 }
 
-//region map RepoRockEntity to List of Repo
-/**
- * Extension function to convert
- * [RepoRockEntity] to list of [Repo] domain objects
- */
-fun List<RepoRockEntity>.asDomainRockModel(): List<Repo> {
-    return map {
-        Repo(
-            previewUrl = it.previewUrl,
-            artistName = it.artistName,
-            artworkUrl100 = it.artworkUrl100,
-            collectionName = it.collectionName,
-            trackName = it.trackName
-        )
-    }
-}
-//end region

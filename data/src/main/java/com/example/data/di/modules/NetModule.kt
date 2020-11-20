@@ -57,7 +57,6 @@ open class NetModule {
     open fun provideNetworkService(retrofit: Retrofit): MusicApiService =
         retrofit.create(MusicApiService::class.java)
 
-
     @Provides
     @Singleton
     open fun provideNetworkChecker(context: Context): NetworkChecker = NetworkChecker(context)

@@ -3,7 +3,7 @@ package com.zero.musichunter.domain.usecases
 import com.zero.musichunter.domain.exception.NoConnectedException
 import com.zero.musichunter.domain.functions.StatementSingle
 import com.zero.musichunter.domain.model.Repo
-import com.zero.musichunter.domain.repository.RepoRepository
+import com.zero.musichunter.domain.repository.RockRepository
 import com.zero.musichunter.domain.usecases.base.Logger
 import com.zero.musichunter.domain.usecases.base.SingleUseCase
 import com.zero.musichunter.domain.usecases.base.UseCaseScheduler
@@ -12,25 +12,25 @@ import javax.inject.Inject
 
 /**
  * This class is an implementation of [SingleUseCase] that represents a use case for
- * retrieving a collection of all [Repo].
+ * retrieving a collection of all rock[Repo].
  */
 class GetRockListRepo @Inject constructor(
-    private val repoRepository: RepoRepository,
-    useCaseScheduler: UseCaseScheduler? = null, logger: Logger? = null
-) : SingleUseCase<List<Repo>>(useCaseScheduler, logger) {
-    override fun build(): Single<List<Repo>> {
+    private val rockRepository: RockRepository,
+    useCaseScheduler: UseCaseScheduler, logger: Logger
+) : SingleUseCase<List<Repo>, Void>(useCaseScheduler, logger) {
+    override fun build(param: Void?): Single<List<Repo>> {
 
-        val getCacheRockListRepo = repoRepository.getCacheRockListRepo()
+        val getCacheRockListRepo = rockRepository.getCacheRockListRepo()
 
         val cacheSingle = getCacheRockListRepo.map {
             if (it.isEmpty()) throw NoConnectedException else it
         }
-        val netSingle = repoRepository.getRockListFromNet()
+        val netSingle = rockRepository.getRockListFromNet()
             .flatMap {
-                repoRepository.saveRockListRepo(it).andThen(getCacheRockListRepo)
+                rockRepository.saveRockListRepo(it).andThen(getCacheRockListRepo)
             }
 
-        return StatementSingle.ifThen(repoRepository.isConnected, netSingle, cacheSingle)
+        return StatementSingle.ifThen(rockRepository.isConnected, netSingle, cacheSingle)
     }
 
 }

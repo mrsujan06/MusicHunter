@@ -66,6 +66,4 @@ class ClassicMusicFragment : Fragment() {
             adapter = groupAdapter
         }
     }
-
-
 }

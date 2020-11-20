@@ -1,8 +1,6 @@
 package com.example.data.net.dto
 
-import com.example.data.persistence.entities.RepoClassicEntity
-import com.example.data.persistence.entities.RepoPopEntity
-import com.example.data.persistence.entities.RepoRockEntity
+import com.example.data.persistence.entities.ClassicEntity
 import com.squareup.moshi.Json
 import com.zero.musichunter.domain.model.Repo
 
@@ -49,12 +47,12 @@ fun NetworkMusicContainer.asDomainModel(): List<Repo> {
 //region map DTO to List of RepoClassicEntity
 /**
  * [NetworkMusicContainer] extension function to
- * convert Network results to list of [RepoClassicEntity]
+ * convert Network results to list of [ClassicEntity]
  * entity objects
  */
-fun NetworkMusicContainer.asDatabaseClassicModel(): List<RepoClassicEntity> {
+fun NetworkMusicContainer.asDatabaseClassicModel(): List<ClassicEntity> {
     return results.map {
-        RepoClassicEntity(
+        ClassicEntity(
             previewUrl = it.previewUrl,
             artistName = it.artistName,
             artworkUrl100 = it.artworkUrl100,
@@ -64,45 +62,6 @@ fun NetworkMusicContainer.asDatabaseClassicModel(): List<RepoClassicEntity> {
     }
 }
 //endregion
-
-//region map DTO to List of RepoPopEntity
-/**
- * [NetworkMusicContainer] extension function to
- * convert Network results to list of [RepoPopEntity]
- * entity objects
- */
-fun NetworkMusicContainer.asDatabasePopModel(): List<RepoPopEntity> {
-    return results.map {
-        RepoPopEntity(
-            previewUrl = it.previewUrl,
-            artistName = it.artistName,
-            artworkUrl100 = it.artworkUrl100,
-            collectionName = it.collectionName,
-            trackName = it.trackName
-        )
-    }
-}
-//endregion
-
-//region map DTO to List of RepoRockEntity
-/**
- * [NetworkMusicContainer] extension function to
- * convert network results to list of [RepoRockEntity]
- * entity objects
- */
-fun NetworkMusicContainer.asDatabaseRockModel(): List<RepoRockEntity> {
-    return results.map {
-        RepoRockEntity(
-            previewUrl = it.previewUrl,
-            artistName = it.artistName,
-            artworkUrl100 = it.artworkUrl100,
-            collectionName = it.collectionName,
-            trackName = it.trackName
-        )
-    }
-}
-//endregion
-
 
 
 

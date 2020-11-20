@@ -3,14 +3,13 @@ package com.example.data.persistence.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.data.persistence.entities.RepoPopEntity.Companion.REPO_POP_TABLE
-import com.zero.musichunter.domain.model.Repo
+import com.example.data.persistence.entities.PopEntity.Companion.REPO_POP_TABLE
 
 /**
  * RepoPopEntity represents a pop music entity in the database.
  */
 @Entity(tableName = REPO_POP_TABLE)
-data class RepoPopEntity constructor(
+data class PopEntity constructor(
     @PrimaryKey
     @ColumnInfo(name = REPO_POP_ID)
     val previewUrl: String,
@@ -35,22 +34,3 @@ data class RepoPopEntity constructor(
         const val REPO_POP_TRACK_NAME = "track_name"
     }
 }
-
-//region RepoPopEntity to List of Repo
-/**
- * [RepoPopEntity] extension function to
- * convert Network results to list of [Repo]
- * domain objects
- */
-fun List<RepoPopEntity>.asDomainPopModel(): List<Repo> {
-    return map {
-        Repo(
-            previewUrl = it.previewUrl,
-            artistName = it.artistName,
-            artworkUrl100 = it.artworkUrl100,
-            collectionName = it.collectionName,
-            trackName = it.trackName
-        )
-    }
-}
-//end region

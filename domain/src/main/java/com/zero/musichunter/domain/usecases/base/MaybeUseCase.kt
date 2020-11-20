@@ -2,14 +2,14 @@ package com.zero.musichunter.domain.usecases.base
 
 import io.reactivex.rxjava3.core.Maybe
 
-abstract class MaybeUseCase<R>
+abstract class MaybeUseCase<R, in P>
 constructor(
     private val useCaseScheduler: UseCaseScheduler?,
     private val logger: Logger?
-) : UseCase<Maybe<R>>(logger) {
+) : UseCase<Maybe<R>, P>(logger) {
 
-    override fun execute( fromUseCase: Boolean): Maybe<R> =
-        super.execute(fromUseCase)
+    override fun execute(param: P?,fromUseCase: Boolean): Maybe<R> =
+        super.execute(param,fromUseCase)
             .compose { transformer ->
                 useCaseScheduler?.let {
                     if (fromUseCase) transformer

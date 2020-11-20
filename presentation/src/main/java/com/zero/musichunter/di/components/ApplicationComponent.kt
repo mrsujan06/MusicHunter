@@ -3,7 +3,10 @@ package com.zero.musichunter.di.components
 import android.app.Application
 import com.example.data.di.components.DataComponent
 import com.zero.musichunter.di.PerApplication
-import com.zero.musichunter.di.modules.*
+import com.zero.musichunter.di.modules.ApplicationModule
+import com.zero.musichunter.di.modules.SchedulerModule
+import com.zero.musichunter.di.modules.UseCaseModule
+import com.zero.musichunter.di.modules.ViewModelFactoryModule
 import dagger.BindsInstance
 import dagger.Component
 
@@ -12,10 +15,9 @@ import dagger.Component
     dependencies = [(DataComponent::class)],
     modules = [
         (ApplicationModule::class),
+        (SchedulerModule::class),
         (UseCaseModule::class),
-        (ClassicMusicModule::class),
-        (PopMusicModule::class),
-        (RockMusicModule::class)
+        (ViewModelFactoryModule::class),
     ]
 )
 interface ApplicationComponent {

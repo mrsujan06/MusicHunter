@@ -23,7 +23,11 @@ class RockMusicFragment : Fragment() {
     lateinit var rockMusicViewModelFactory: RockMusicViewModelFactory
     private lateinit var musicViewModel: RockMusicViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.rock_fragment, container, false)
     }
 
@@ -34,6 +38,11 @@ class RockMusicFragment : Fragment() {
         initDagger()
 
         initViewModel()
+    }
+
+    private fun initDagger() {
+        (activity?.applicationContext as App).appComponent.activityComponent()
+            .create(this.requireActivity()).inject(this)
     }
 
     private fun initViewModel() {
@@ -48,11 +57,6 @@ class RockMusicFragment : Fragment() {
         musicViewModel.rockRepo.observe(viewLifecycleOwner) {
             initRecyclerview(it.toRecyclerviewListItem())
         }
-    }
-
-    private fun initDagger() {
-        (activity?.applicationContext as App).appComponent.activityComponent()
-            .create(this.requireActivity()).inject(this)
     }
 
     private fun initRecyclerview(items: List<MusicRvItem>) {

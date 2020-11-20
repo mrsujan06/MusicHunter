@@ -3,9 +3,15 @@ package com.example.data.di.modules
 import com.example.data.di.providers.NetworkChecker
 import com.example.data.mapper.RepoMapper
 import com.example.data.net.api.MusicApiService
-import com.example.data.persistence.processor.RepoProcessor
-import com.example.data.repository.RepoRepositoryDataRepository
-import com.zero.musichunter.domain.repository.RepoRepository
+import com.example.data.persistence.processor.ClassicProcessor
+import com.example.data.persistence.processor.PopProcessor
+import com.example.data.persistence.processor.RockProcessor
+import com.example.data.repository.ClassicRepositoryImp
+import com.example.data.repository.PopRepositoryImp
+import com.example.data.repository.RockRepositoryImp
+import com.zero.musichunter.domain.repository.ClassicRepository
+import com.zero.musichunter.domain.repository.PopRepository
+import com.zero.musichunter.domain.repository.RockRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -15,12 +21,33 @@ open class RepositoryModule {
 
     @Provides
     @Singleton
-    open fun provideMusicRepository(
+    open fun provideClassicRepository(
         musicApiService: MusicApiService,
-        repoProcessor: RepoProcessor,
+        classicProcessor: ClassicProcessor,
         repoMapper: RepoMapper,
         networkChecker: NetworkChecker
-    ): RepoRepository =
-        RepoRepositoryDataRepository(musicApiService, repoProcessor, repoMapper, networkChecker)
+    ): ClassicRepository =
+        ClassicRepositoryImp(musicApiService, classicProcessor, repoMapper, networkChecker)
+
+    @Provides
+    @Singleton
+    open fun providePopRepository(
+        musicApiService: MusicApiService,
+        popProcessor: PopProcessor,
+        repoMapper: RepoMapper,
+        networkChecker: NetworkChecker
+    ): PopRepository =
+        PopRepositoryImp(musicApiService, popProcessor, repoMapper, networkChecker)
+
+
+    @Provides
+    @Singleton
+    open fun provideRockRepository(
+        musicApiService: MusicApiService,
+        rockProcessor: RockProcessor,
+        repoMapper: RepoMapper,
+        networkChecker: NetworkChecker
+    ): RockRepository =
+        RockRepositoryImp(musicApiService, rockProcessor, repoMapper, networkChecker)
 
 }
